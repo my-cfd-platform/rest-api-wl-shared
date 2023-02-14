@@ -9,3 +9,9 @@ pub struct SessionEntity {
     #[serde(rename = "traderId")]
     pub trader_id: String,
 }
+
+impl SessionEntity {
+    pub fn get_session_token(&self) -> &str {
+        &self.row_key
+    }
+}
