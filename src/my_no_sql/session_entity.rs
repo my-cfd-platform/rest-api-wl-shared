@@ -8,6 +8,8 @@ pub const PARTITION_KEY_VALUE: &str = "t";
 pub struct SessionEntity {
     #[serde(rename = "traderId")]
     pub trader_id: String,
+    #[serde(rename = "tokenExpires")]
+    pub token_expires: i64,
 }
 
 impl SessionEntity {
