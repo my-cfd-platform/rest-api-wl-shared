@@ -6,8 +6,10 @@ pub const PARTITION_KEY_VALUE: &str = "t";
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct SessionEntity {
-    #[serde(rename = "traderId")]
+    #[serde(rename = "TraderId")]
     pub trader_id: String,
+    #[serde(rename = "Expires")]
+    pub expires: String,
 }
 
 impl SessionEntity {
