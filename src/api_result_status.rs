@@ -1,4 +1,6 @@
-use my_http_server_swagger::MyHttpIntegerEnum;
+use my_http_server_controllers::controllers::documentation::DataTypeProvider;
+use my_http_server_swagger::{MyHttpIntegerEnum, MyHttpObjectStructure};
+use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_repr::*;
 
 #[derive(Serialize_repr, Deserialize_repr, MyHttpIntegerEnum, Debug)]
@@ -48,6 +50,17 @@ pub enum ApiResultStatus {
 
     #[http_enum_case(id="-999"; description="Force Update required")]
     ForceUpdateIsRequired = -999,
+}
+
+#[derive(Serialize, Deserialize, MyHttpObjectStructure)]
+pub struct HttpResult {
+    pub result: ApiResultStatus,
+}
+
+#[derive(Serialize)]
+pub struct HttpResultWithData<TData: Serialize + DeserializeOwned + DataTypeProvider> {
+    pub result: ApiResultStatus,
+    pub data: Option<TData>,
 }
 
 #[cfg(test)]
