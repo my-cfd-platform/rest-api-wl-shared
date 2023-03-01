@@ -53,12 +53,12 @@ pub enum ApiResultStatus {
 }
 
 #[derive(Serialize, Deserialize, MyHttpObjectStructure)]
-pub struct HttpResult {
+pub struct ApiHttpResult {
     pub result: ApiResultStatus,
 }
 
 #[derive(Serialize)]
-pub struct HttpResultWithData<TData: Serialize + DeserializeOwned + DataTypeProvider> {
+pub struct ApiHttpResultWithData<TData: Serialize + DeserializeOwned + DataTypeProvider> {
     pub result: ApiResultStatus,
     pub data: Option<TData>,
 }
