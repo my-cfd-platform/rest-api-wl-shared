@@ -1,9 +1,9 @@
 use crate::ApiResultStatus;
 use my_http_server::HttpFailResult;
 use my_http_server_swagger::MyHttpObjectStructure;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
-#[derive(Serialize, Deserialize, Debug, MyHttpObjectStructure)]
+#[derive(Serialize, Debug, MyHttpObjectStructure)]
 pub struct AuthenticationFailedApiResponse {
     #[serde(rename = "result")]
     pub result: ApiResultStatus,
@@ -11,7 +11,7 @@ pub struct AuthenticationFailedApiResponse {
     pub description: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, MyHttpObjectStructure)]
+#[derive(Serialize, Debug, MyHttpObjectStructure)]
 pub struct AuthorizationFailedApiResponse {
     #[serde(rename = "result")]
     pub result: ApiResultStatus,

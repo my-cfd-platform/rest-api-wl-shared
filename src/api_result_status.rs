@@ -1,9 +1,9 @@
 use my_http_server_controllers::controllers::documentation::DataTypeProvider;
 use my_http_server_swagger::{MyHttpIntegerEnum, MyHttpObjectStructure};
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use serde::Serialize;
 use serde_repr::*;
 
-#[derive(Serialize_repr, Deserialize_repr, MyHttpIntegerEnum, Debug)]
+#[derive(Serialize_repr, MyHttpIntegerEnum, Debug)]
 #[repr(i16)]
 pub enum ApiResultStatus {
     #[http_enum_case(id="0"; description="Operations was successful")]
@@ -52,13 +52,13 @@ pub enum ApiResultStatus {
     ForceUpdateIsRequired = -999,
 }
 
-#[derive(Serialize, Deserialize, MyHttpObjectStructure)]
+#[derive(Serialize, MyHttpObjectStructure)]
 pub struct ApiHttpResult {
     pub result: ApiResultStatus,
 }
 
-#[derive(Serialize)]
-pub struct ApiHttpResultWithData<TData: Serialize + DeserializeOwned + DataTypeProvider> {
+#[derive(Serialize, MyHttpObjectStructure)]
+pub struct ApiHttpResultWithData<TData: Serialize + DataTypeProvider> {
     pub result: ApiResultStatus,
     pub data: Option<TData>,
 }
@@ -66,8 +66,8 @@ pub struct ApiHttpResultWithData<TData: Serialize + DeserializeOwned + DataTypeP
 #[cfg(test)]
 mod test {
     use super::ApiResultStatus;
-    use serde::{Deserialize, Serialize};
-    #[derive(Serialize, Deserialize, Debug)]
+    use serde::Serialize;
+    #[derive(Serialize, Debug)]
     pub struct TestStruct {
         result: ApiResultStatus,
     }
