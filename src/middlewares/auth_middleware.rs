@@ -4,8 +4,9 @@ use my_http_server::{
     HttpContext, HttpFailResult, HttpOkResult, HttpServerMiddleware, HttpServerRequestFlow,
 };
 use my_no_sql_tcp_reader::MyNoSqlDataReader;
+use my_nosql_contracts::SessionEntity;
 
-use crate::{my_no_sql::SessionEntity, ApiResultStatus};
+use crate::ApiResultStatus;
 
 use super::{AuthenticationFailedApiResponse, TradingPlatformRequestCredentials};
 
@@ -53,7 +54,7 @@ impl HttpServerMiddleware for AuthMiddleware {
 
         let token_entity = self
             .sessions_reader
-            .get_entity(crate::my_no_sql::PARTITION_KEY_VALUE, token)
+            .get_entity(&SessionEntity::get_pk(), token)
             .await;
 
         if token_entity.is_none() {
