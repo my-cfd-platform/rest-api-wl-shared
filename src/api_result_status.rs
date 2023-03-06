@@ -3,7 +3,7 @@ use my_http_server_swagger::{MyHttpIntegerEnum, MyHttpObjectStructure};
 use serde::Serialize;
 use serde_repr::*;
 
-#[derive(Serialize_repr, MyHttpIntegerEnum, Debug)]
+#[derive(Serialize_repr, Deserialize_repr, MyHttpIntegerEnum, Debug)]
 #[repr(i16)]
 pub enum ApiResultStatus {
     #[http_enum_case(id="0"; description="Operations was successful")]
