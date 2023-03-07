@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
 use my_http_server::RequestCredentials;
+use my_nosql_contracts::SessionEntity;
 
-use crate::my_no_sql::SessionEntity;
 
 pub struct TradingPlatformRequestCredentials {
     pub session_entity: Arc<SessionEntity>,
