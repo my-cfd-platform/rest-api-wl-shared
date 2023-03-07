@@ -1,3 +1,4 @@
+use my_http_server::HttpFailResult;
 use my_http_server_controllers::controllers::documentation::DataTypeProvider;
 use my_http_server_swagger::{MyHttpIntegerEnum, MyHttpObjectStructure};
 use serde::Serialize;
@@ -55,6 +56,18 @@ pub enum ApiResultStatus {
 #[derive(Serialize, MyHttpObjectStructure)]
 pub struct ApiHttpResult {
     pub result: ApiResultStatus,
+}
+
+impl Into<HttpFailResult> for ApiHttpResult {
+    fn into(self) -> HttpFailResult {
+        HttpFailResult {
+            content_type: my_http_server::WebContentType::Json,
+            status_code: 200,
+            content: serde_json::to_vec(&self).unwrap(),
+            write_telemetry: false,
+            write_to_log: false,
+        }
+    }
 }
 
 #[derive(Serialize, MyHttpObjectStructure)]
