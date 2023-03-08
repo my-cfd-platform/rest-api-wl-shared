@@ -42,7 +42,14 @@ impl HttpServerMiddleware for AuthMiddleware {
 
         let token = extract_token(auth_header.as_bytes());
 
-        let token = match std::str::from_utf8(token) {
+        if token.is_none() {
+            return Err(AuthenticationFailedApiResponse::new(
+                ApiResultStatus::AccessTokenInvalid,
+                "Authorization header has empry value".to_string(),
+            ));
+        }
+
+        let token = match std::str::from_utf8(token.unwrap()) {
             Ok(result) => result,
             Err(_) => {
                 return Err(AuthenticationFailedApiResponse::new(
@@ -72,9 +79,12 @@ impl HttpServerMiddleware for AuthMiddleware {
     }
 }
 
-fn extract_token(src: &[u8]) -> &[u8] {
-    if src[6] == b' ' {
-        return &src[7..];
+fn extract_token(src: &[u8]) -> Option<&[u8]> {
+    if src.len() == 0 {
+        return None;
     }
-    src
+    if src[6] == b' ' {
+        return Some(&src[7..]);
+    }
+    Some(src)
 }
