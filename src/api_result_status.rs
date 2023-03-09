@@ -60,9 +60,33 @@ pub struct ApiHttpResult {
 
 impl Into<HttpFailResult> for ApiHttpResult {
     fn into(self) -> HttpFailResult {
+        self.result.into()
+    }
+}
+
+impl Into<HttpFailResult> for ApiResultStatus {
+    fn into(self) -> HttpFailResult {
+        let status_code = match self {
+            ApiResultStatus::Ok => 200,
+            ApiResultStatus::InvalidUserNameOrPassword => 200,
+            ApiResultStatus::UserExists => 200,
+            ApiResultStatus::UserNotFound => 200,
+            ApiResultStatus::OldPasswordIsWrong => 200,
+            ApiResultStatus::WrongFileExtension => 200,
+            ApiResultStatus::FileNotFound => 200,
+            ApiResultStatus::PersonalDataNotValid => 200,
+            ApiResultStatus::SystemError => 200,
+            ApiResultStatus::AccessTokenExpired => 401,
+            ApiResultStatus::TechnicalError => 200,
+            ApiResultStatus::CountryIsRestricted => 200,
+            ApiResultStatus::AccessTokenInvalid => 401,
+            ApiResultStatus::AccessClaimRequired => 403,
+            ApiResultStatus::ForceUpdateIsRequired => 200,
+        };
+
         HttpFailResult {
             content_type: my_http_server::WebContentType::Json,
-            status_code: 200,
+            status_code,
             content: serde_json::to_vec(&self).unwrap(),
             write_telemetry: false,
             write_to_log: false,
