@@ -6,9 +6,7 @@ use my_http_server::{
 use my_no_sql_tcp_reader::MyNoSqlDataReader;
 use my_nosql_contracts::SessionEntity;
 
-use crate::ApiResultStatus;
-
-use super::{AuthenticationFailedApiResponse, TradingPlatformRequestCredentials};
+use super::TradingPlatformRequestCredentials;
 
 const AUTH_HEADER: &str = "authorization";
 
@@ -32,10 +30,7 @@ impl HttpServerMiddleware for AuthMiddleware {
         let auth_header = ctx.request.get_headers().get(AUTH_HEADER);
 
         if auth_header.is_none() {
-            return Err(AuthenticationFailedApiResponse::new(
-                ApiResultStatus::AccessTokenInvalid,
-                "AccessToken not found".to_string(),
-            ));
+            return get_next.next(ctx).await;
         }
 
         let auth_header = auth_header.unwrap();
@@ -43,19 +38,13 @@ impl HttpServerMiddleware for AuthMiddleware {
         let token = extract_token(auth_header.as_bytes());
 
         if token.is_none() {
-            return Err(AuthenticationFailedApiResponse::new(
-                ApiResultStatus::AccessTokenInvalid,
-                "Authorization header has empry value".to_string(),
-            ));
+            return get_next.next(ctx).await;
         }
 
         let token = match std::str::from_utf8(token.unwrap()) {
             Ok(result) => result,
             Err(_) => {
-                return Err(AuthenticationFailedApiResponse::new(
-                    ApiResultStatus::AccessTokenInvalid,
-                    "AccessToken is broken".to_string(),
-                ))
+                return get_next.next(ctx).await;
             }
         };
 
@@ -65,10 +54,7 @@ impl HttpServerMiddleware for AuthMiddleware {
             .await;
 
         if token_entity.is_none() {
-            return Err(AuthenticationFailedApiResponse::new(
-                ApiResultStatus::AccessTokenInvalid,
-                "Invalid or expired AccessToken".to_string(),
-            ));
+            return get_next.next(ctx).await;
         }
 
         ctx.credentials = Some(Box::new(TradingPlatformRequestCredentials::new(
