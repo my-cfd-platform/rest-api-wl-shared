@@ -84,10 +84,14 @@ impl Into<HttpFailResult> for ApiResultStatus {
             ApiResultStatus::ForceUpdateIsRequired => 200,
         };
 
+        let result = ApiHttpResult {
+            result: status_code,
+        };
+
         HttpFailResult {
             content_type: my_http_server::WebContentType::Json,
             status_code,
-            content: serde_json::to_vec(&self).unwrap(),
+            content: serde_json::to_vec(&result).unwrap(),
             write_telemetry: false,
             write_to_log: false,
         }
