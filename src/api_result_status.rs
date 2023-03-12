@@ -84,9 +84,7 @@ impl Into<HttpFailResult> for ApiResultStatus {
             ApiResultStatus::ForceUpdateIsRequired => 200,
         };
 
-        let result = ApiHttpResult {
-            result: status_code,
-        };
+        let result = ApiHttpResult { result: self };
 
         HttpFailResult {
             content_type: my_http_server::WebContentType::Json,
