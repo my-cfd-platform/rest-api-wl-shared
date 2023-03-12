@@ -4,9 +4,8 @@ use my_http_server::{
     HttpContext, HttpFailResult, HttpOkResult, HttpServerMiddleware, HttpServerRequestFlow,
 };
 use my_no_sql_tcp_reader::MyNoSqlDataReader;
-use my_nosql_contracts::SessionEntity;
 
-use super::TradingPlatformRequestCredentials;
+use super::{SessionEntity, TradingPlatformRequestCredentials};
 
 const AUTH_HEADER: &str = "authorization";
 
