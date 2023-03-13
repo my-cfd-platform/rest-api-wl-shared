@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-pub const PARTITION_KEY_VALUE: &str = "t";
+pub const SESSION_PARTITION_KEY_VALUE: &str = "t";
 
 #[my_no_sql_macros::my_no_sql_entity("sessionsentites")]
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -14,7 +14,7 @@ pub struct SessionEntity {
 
 impl SessionEntity {
     pub fn get_pk() -> String {
-        PARTITION_KEY_VALUE.to_string()
+        SESSION_PARTITION_KEY_VALUE.to_string()
     }
 
     pub fn get_session_token(&self) -> &str {
