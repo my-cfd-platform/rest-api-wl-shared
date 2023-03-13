@@ -5,9 +5,7 @@ use my_http_server::{
 };
 use my_no_sql_tcp_reader::MyNoSqlDataReader;
 
-use super::{SessionEntity, TradingPlatformRequestCredentials};
-
-const AUTH_HEADER: &str = "authorization";
+use super::{GetSessionToken, SessionEntity, TradingPlatformRequestCredentials};
 
 pub struct AuthMiddleware {
     sessions_reader: Arc<MyNoSqlDataReader<SessionEntity>>,
@@ -26,30 +24,15 @@ impl HttpServerMiddleware for AuthMiddleware {
         ctx: &mut HttpContext,
         get_next: &mut HttpServerRequestFlow,
     ) -> Result<HttpOkResult, HttpFailResult> {
-        let auth_header = ctx.request.get_headers().get(AUTH_HEADER);
+        let session_token = ctx.get_session_token();
 
-        if auth_header.is_none() {
+        if session_token.is_none() {
             return get_next.next(ctx).await;
         }
-
-        let auth_header = auth_header.unwrap();
-
-        let token = extract_token(auth_header.as_bytes());
-
-        if token.is_none() {
-            return get_next.next(ctx).await;
-        }
-
-        let token = match std::str::from_utf8(token.unwrap()) {
-            Ok(result) => result,
-            Err(_) => {
-                return get_next.next(ctx).await;
-            }
-        };
 
         let token_entity = self
             .sessions_reader
-            .get_entity(&SessionEntity::get_pk(), token)
+            .get_entity(&SessionEntity::get_pk(), session_token.unwrap())
             .await;
 
         if token_entity.is_none() {
@@ -62,14 +45,4 @@ impl HttpServerMiddleware for AuthMiddleware {
 
         get_next.next(ctx).await
     }
-}
-
-fn extract_token(src: &[u8]) -> Option<&[u8]> {
-    if src.len() == 0 {
-        return None;
-    }
-    if src[6] == b' ' {
-        return Some(&src[7..]);
-    }
-    Some(src)
 }
