@@ -8,7 +8,7 @@ pub trait GetSessionToken {
 
 impl GetSessionToken for HttpContext {
     fn get_session_token(&self) -> Option<&str> {
-        let auth_header = self.request.get_headers().get(AUTH_HEADER)?;
+        let auth_header = self.request.get_header(AUTH_HEADER)?;
 
         let token = extract_token(auth_header.as_bytes())?;
 
