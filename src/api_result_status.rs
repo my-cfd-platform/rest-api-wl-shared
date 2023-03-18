@@ -112,7 +112,7 @@ mod test {
     }
 
     #[test]
-    pub fn test_reult_deserialization() {
+    pub fn test_result_deserialization() {
         let test_struct = TestStruct {
             result: ApiResultStatus::AccessTokenExpired,
         };
