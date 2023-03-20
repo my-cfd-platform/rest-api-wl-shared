@@ -4,7 +4,7 @@ use my_http_server_swagger::{MyHttpIntegerEnum, MyHttpObjectStructure};
 use serde::Serialize;
 use serde_repr::*;
 
-#[derive(Serialize_repr, Deserialize_repr, MyHttpIntegerEnum, Debug)]
+#[derive(Serialize_repr, Deserialize_repr, MyHttpIntegerEnum, Debug, Clone, Copy)]
 #[repr(i16)]
 pub enum ApiResultStatus {
     #[http_enum_case(id="0"; description="Operations was successful")]
@@ -53,20 +53,9 @@ pub enum ApiResultStatus {
     ForceUpdateIsRequired = -999,
 }
 
-#[derive(Serialize, MyHttpObjectStructure)]
-pub struct ApiHttpResult {
-    pub result: ApiResultStatus,
-}
-
-impl Into<HttpFailResult> for ApiHttpResult {
-    fn into(self) -> HttpFailResult {
-        self.result.into()
-    }
-}
-
-impl Into<HttpFailResult> for ApiResultStatus {
-    fn into(self) -> HttpFailResult {
-        let status_code = match self {
+impl ApiResultStatus {
+    pub fn get_status_code(&self) -> u16 {
+        match self {
             ApiResultStatus::Ok => 200,
             ApiResultStatus::InvalidUserNameOrPassword => 200,
             ApiResultStatus::UserExists => 200,
@@ -82,8 +71,24 @@ impl Into<HttpFailResult> for ApiResultStatus {
             ApiResultStatus::AccessTokenInvalid => 401,
             ApiResultStatus::AccessClaimRequired => 403,
             ApiResultStatus::ForceUpdateIsRequired => 200,
-        };
+        }
+    }
+}
 
+#[derive(Serialize, MyHttpObjectStructure)]
+pub struct ApiHttpResult {
+    pub result: ApiResultStatus,
+}
+
+impl Into<HttpFailResult> for ApiHttpResult {
+    fn into(self) -> HttpFailResult {
+        self.result.into()
+    }
+}
+
+impl Into<HttpFailResult> for ApiResultStatus {
+    fn into(self) -> HttpFailResult {
+        let status_code = self.get_status_code();
         let result = ApiHttpResult { result: self };
 
         HttpFailResult {
@@ -100,6 +105,20 @@ impl Into<HttpFailResult> for ApiResultStatus {
 pub struct ApiHttpResultWithData<TData: Serialize + DataTypeProvider> {
     pub result: ApiResultStatus,
     pub data: Option<TData>,
+}
+
+impl<TData: Serialize + DataTypeProvider> Into<HttpFailResult> for &ApiHttpResultWithData<TData> {
+    fn into(self) -> HttpFailResult {
+        let status_code = self.result.get_status_code();
+
+        HttpFailResult {
+            content_type: my_http_server::WebContentType::Json,
+            status_code,
+            content: serde_json::to_vec(self).unwrap(),
+            write_telemetry: false,
+            write_to_log: false,
+        }
+    }
 }
 
 #[cfg(test)]
