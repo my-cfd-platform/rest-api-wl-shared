@@ -107,14 +107,14 @@ pub struct ApiHttpResultWithData<TData: Serialize + DataTypeProvider> {
     pub data: Option<TData>,
 }
 
-impl<TData: Serialize + DataTypeProvider> Into<HttpFailResult> for &ApiHttpResultWithData<TData> {
+impl<TData: Serialize + DataTypeProvider> Into<HttpFailResult> for ApiHttpResultWithData<TData> {
     fn into(self) -> HttpFailResult {
         let status_code = self.result.get_status_code();
 
         HttpFailResult {
             content_type: my_http_server::WebContentType::Json,
             status_code,
-            content: serde_json::to_vec(self).unwrap(),
+            content: serde_json::to_vec(&self).unwrap(),
             write_telemetry: false,
             write_to_log: false,
         }
