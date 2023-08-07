@@ -74,6 +74,7 @@ impl ApiResultStatus {
             ApiResultStatus::AccessTokenInvalid => 401,
             ApiResultStatus::AccessClaimRequired => 403,
             ApiResultStatus::ForceUpdateIsRequired => 200,
+            ApiResultStatus::InvalidResetCode => 200,
         }
     }
 }
