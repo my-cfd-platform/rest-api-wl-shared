@@ -52,6 +52,9 @@ pub enum ApiResultStatus {
     #[http_enum_case(id="-19"; description="Invalid reset code")]
     InvalidResetCode = -19,
 
+    #[http_enum_case(id="-20"; description="Operation can be executed only from KycNotPassed status")]
+    KycNoPassedStatusOnly = -20,
+
     #[http_enum_case(id="-999"; description="Force Update required")]
     ForceUpdateIsRequired = -999,
 }
