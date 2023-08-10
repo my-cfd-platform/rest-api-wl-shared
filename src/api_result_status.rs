@@ -78,6 +78,7 @@ impl ApiResultStatus {
             ApiResultStatus::AccessClaimRequired => 403,
             ApiResultStatus::ForceUpdateIsRequired => 200,
             ApiResultStatus::InvalidResetCode => 200,
+            ApiResultStatus::KycNoPassedStatusOnly => 200,
         }
     }
 }
