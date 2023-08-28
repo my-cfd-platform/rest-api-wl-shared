@@ -58,8 +58,11 @@ pub enum ApiResultStatus {
     #[http_enum_case(id="-21"; description="Account not found")]
     AccountNotFound = -21,
 
-    #[http_enum_case(id="-21"; description="Deposit request is failed")]
+    #[http_enum_case(id="-22"; description="Deposit request is failed")]
     DepositFailed = -22,
+
+    #[http_enum_case(id="-23"; description="Payment system is not supported")]
+    PaymentSystemIsNotSupported = -23,
 
     #[http_enum_case(id="-999"; description="Force Update required")]
     ForceUpdateIsRequired = -999,
@@ -87,6 +90,7 @@ impl ApiResultStatus {
             ApiResultStatus::KycNoPassedStatusOnly => 200,
             ApiResultStatus::AccountNotFound => 200,
             ApiResultStatus::DepositFailed => 200,
+            ApiResultStatus::PaymentSystemIsNotSupported => 200,
         }
     }
 }
