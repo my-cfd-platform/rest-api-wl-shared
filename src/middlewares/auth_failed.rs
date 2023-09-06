@@ -72,7 +72,7 @@ pub struct AuthFailResponseFactory;
 impl my_http_server_controllers::controllers::AuthErrorFactory for AuthFailResponseFactory {
     fn get_not_authenticated(&self) -> my_http_server::HttpFailResult {
         return AuthenticationFailedApiResponse::new(
-            ApiResultStatus::AccessTokenInvalid,
+            ApiResultStatus::AccessTokenExpired,
             AuthenticationFailedApiResponse::default_desc(),
         );
     }
