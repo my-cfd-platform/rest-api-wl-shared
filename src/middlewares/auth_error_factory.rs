@@ -13,7 +13,7 @@ pub struct AccessClaimRequired {
 
 impl AuthErrorFactory for AuthErrorFactoryWl {
     fn get_not_authenticated(&self) -> my_http_server::HttpFailResult {
-        ApiResultStatus::AccessTokenInvalid.into()
+        ApiResultStatus::AccessTokenExpired.into()
     }
 
     fn get_not_authorized(&self, claim_name: String) -> my_http_server::HttpFailResult {
