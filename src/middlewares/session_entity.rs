@@ -2,6 +2,14 @@ use serde::{Deserialize, Serialize};
 
 pub const SESSION_PARTITION_KEY_VALUE: &str = "t";
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct SessionClaim {
+    #[serde(rename = "Name")]
+    pub name: String,
+    #[serde(rename = "Expires")]
+    pub expires: i64,
+}
+
 #[my_no_sql_macros::my_no_sql_entity("sessionsentites")]
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
@@ -10,6 +18,8 @@ pub struct SessionEntity {
     pub trader_id: String,
     #[serde(rename = "Expires")]
     pub expires: String,
+    #[serde(rename = "Claims")]
+    pub claims: Option<Vec<SessionClaim>>,
 }
 
 impl SessionEntity {

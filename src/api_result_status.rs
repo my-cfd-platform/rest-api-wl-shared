@@ -43,6 +43,9 @@ pub enum ApiResultStatus {
     #[http_enum_case(id="-11"; description="CountryRestriction")]
     CountryIsRestricted = -11,
 
+    #[http_enum_case(id="-12"; description="Kyc required for this operation")]
+    KycRequired = -12,
+
     #[http_enum_case(id="-17"; description="AccessTokenInvalid")]
     AccessTokenInvalid = -17,
 
@@ -81,6 +84,7 @@ impl ApiResultStatus {
             ApiResultStatus::PersonalDataNotValid => 200,
             ApiResultStatus::SystemError => 200,
             ApiResultStatus::AccessTokenExpired => 401,
+            ApiResultStatus::KycRequired => 401,
             ApiResultStatus::TechnicalError => 200,
             ApiResultStatus::CountryIsRestricted => 200,
             ApiResultStatus::AccessTokenInvalid => 401,

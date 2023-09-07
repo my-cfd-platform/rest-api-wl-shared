@@ -20,9 +20,10 @@ impl GetSessionToken for HttpContext {
 }
 
 fn extract_token(src: &[u8]) -> Option<&[u8]> {
-    if src.len() == 0 {
+    if src.len() < 6 {
         return None;
     }
+
     if src[6] == b' ' {
         return Some(&src[7..]);
     }
