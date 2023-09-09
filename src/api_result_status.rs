@@ -46,6 +46,9 @@ pub enum ApiResultStatus {
     #[http_enum_case(id="-12"; description="Kyc required for this operation")]
     KycRequired = -12,
 
+    #[http_enum_case(id="-13"; description="Recaptcha verification error")]
+    RecaptchaVerificationError = -13,
+
     #[http_enum_case(id="-17"; description="AccessTokenInvalid")]
     AccessTokenInvalid = -17,
 
@@ -95,6 +98,7 @@ impl ApiResultStatus {
             ApiResultStatus::AccountNotFound => 200,
             ApiResultStatus::DepositFailed => 200,
             ApiResultStatus::PaymentSystemIsNotSupported => 200,
+            ApiResultStatus::RecaptchaVerificationError => 200,
         }
     }
 }
