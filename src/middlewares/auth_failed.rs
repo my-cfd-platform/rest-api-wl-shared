@@ -77,10 +77,10 @@ impl my_http_server_controllers::controllers::AuthErrorFactory for AuthFailRespo
         );
     }
 
-    fn get_not_authorized(&self, _claim_name: String) -> my_http_server::HttpFailResult {
+    fn get_not_authorized(&self, claim_name: String) -> my_http_server::HttpFailResult {
         return AuthorizationFailedApiResponse::new(
             ApiResultStatus::AccessClaimRequired,
-            AuthorizationFailedApiResponse::default_desc(),
+            claim_name,
         );
     }
     fn get_global_http_fail_result_types(&self) -> Option<Vec<HttpResult>> {
