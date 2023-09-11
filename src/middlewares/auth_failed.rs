@@ -13,9 +13,7 @@ pub struct AuthenticationFailedApiResponse {
 
 #[derive(Serialize, Debug, MyHttpObjectStructure)]
 pub struct AuthorizationFailedApiResponse {
-    #[serde(rename = "result")]
     pub result: ApiResultStatus,
-    #[serde(rename = "description")]
     pub description: String,
 }
 
