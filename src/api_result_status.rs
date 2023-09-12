@@ -119,12 +119,14 @@ impl Into<HttpFailResult> for ApiResultStatus {
         let status_code = self.get_status_code();
         let result = ApiHttpResult { result: self };
 
+        let write_to_telemetry = write_to_telemetry(&self);
+
         HttpFailResult {
             content_type: my_http_server::WebContentType::Json,
             status_code,
             content: serde_json::to_vec(&result).unwrap(),
-            write_telemetry: false,
-            write_to_log: false,
+            write_telemetry: write_to_telemetry,
+            write_to_log: write_to_telemetry,
         }
     }
 }
@@ -139,17 +141,19 @@ impl<TData: Serialize + DataTypeProvider> Into<HttpFailResult> for ApiHttpResult
     fn into(self) -> HttpFailResult {
         let status_code = self.result.get_status_code();
 
+        let write_to_telemetry = write_to_telemetry(&self.result);
+
         HttpFailResult {
             content_type: my_http_server::WebContentType::Json,
             status_code,
             content: serde_json::to_vec(&self).unwrap(),
-            write_telemetry: false,
-            write_to_log: write_to_log(&self.result),
+            write_telemetry: write_to_telemetry,
+            write_to_log: write_to_telemetry,
         }
     }
 }
 
-fn write_to_log(from: &ApiResultStatus) -> bool {
+fn write_to_telemetry(from: &ApiResultStatus) -> bool {
     match from {
         ApiResultStatus::Ok => true,
         ApiResultStatus::InvalidUserNameOrPassword => false,
