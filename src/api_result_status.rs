@@ -144,8 +144,35 @@ impl<TData: Serialize + DataTypeProvider> Into<HttpFailResult> for ApiHttpResult
             status_code,
             content: serde_json::to_vec(&self).unwrap(),
             write_telemetry: false,
-            write_to_log: false,
+            write_to_log: write_to_log(&self.result),
         }
+    }
+}
+
+fn write_to_log(from: &ApiResultStatus) -> bool {
+    match from {
+        ApiResultStatus::Ok => true,
+        ApiResultStatus::InvalidUserNameOrPassword => false,
+        ApiResultStatus::UserExists => false,
+        ApiResultStatus::UserNotFound => false,
+        ApiResultStatus::OldPasswordIsWrong => false,
+        ApiResultStatus::WrongFileExtension => false,
+        ApiResultStatus::FileNotFound => false,
+        ApiResultStatus::PersonalDataNotValid => false,
+        ApiResultStatus::SystemError => true,
+        ApiResultStatus::AccessTokenExpired => false,
+        ApiResultStatus::TechnicalError => true,
+        ApiResultStatus::CountryIsRestricted => false,
+        ApiResultStatus::KycRequired => false,
+        ApiResultStatus::RecaptchaVerificationError => true,
+        ApiResultStatus::AccessTokenInvalid => false,
+        ApiResultStatus::AccessClaimRequired => false,
+        ApiResultStatus::InvalidResetCode => false,
+        ApiResultStatus::KycNoPassedStatusOnly => false,
+        ApiResultStatus::AccountNotFound => false,
+        ApiResultStatus::DepositFailed => false,
+        ApiResultStatus::PaymentSystemIsNotSupported => false,
+        ApiResultStatus::ForceUpdateIsRequired => false,
     }
 }
 
