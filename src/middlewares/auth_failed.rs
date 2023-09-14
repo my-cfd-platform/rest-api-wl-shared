@@ -25,13 +25,13 @@ impl AuthorizationFailedApiResponse {
         };
 
         let content = serde_json::to_vec(&result).unwrap();
-        HttpFailResult {
-            content_type: my_http_server::WebContentType::Json,
-            status_code: 403,
+        HttpFailResult::new(
+            my_http_server::WebContentType::Json,
+            403,
             content,
-            write_telemetry: false,
-            write_to_log: false,
-        }
+            false,
+            false,
+        )
     }
 
     pub fn default_desc() -> String {
@@ -47,13 +47,14 @@ impl AuthenticationFailedApiResponse {
         };
 
         let content = serde_json::to_vec(&result).unwrap();
-        HttpFailResult {
-            content_type: my_http_server::WebContentType::Json,
-            status_code: 401,
+
+        HttpFailResult::new(
+            my_http_server::WebContentType::Json,
+            401,
             content,
-            write_telemetry: false,
-            write_to_log: false,
-        }
+            false,
+            false,
+        )
     }
 
     pub fn default_desc() -> String {

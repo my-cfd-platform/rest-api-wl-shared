@@ -121,13 +121,13 @@ impl Into<HttpFailResult> for ApiResultStatus {
 
         let write_to_telemetry = write_to_telemetry(&self);
 
-        HttpFailResult {
-            content_type: my_http_server::WebContentType::Json,
+        HttpFailResult::new(
+            my_http_server::WebContentType::Json,
             status_code,
-            content: serde_json::to_vec(&result).unwrap(),
-            write_telemetry: write_to_telemetry,
-            write_to_log: write_to_telemetry,
-        }
+            serde_json::to_vec(&result).unwrap(),
+            write_to_telemetry,
+            write_to_telemetry,
+        )
     }
 }
 
@@ -143,13 +143,13 @@ impl<TData: Serialize + DataTypeProvider> Into<HttpFailResult> for ApiHttpResult
 
         let write_to_telemetry = write_to_telemetry(&self.result);
 
-        HttpFailResult {
-            content_type: my_http_server::WebContentType::Json,
+        HttpFailResult::new(
+            my_http_server::WebContentType::Json,
             status_code,
-            content: serde_json::to_vec(&self).unwrap(),
-            write_telemetry: write_to_telemetry,
-            write_to_log: write_to_telemetry,
-        }
+            serde_json::to_vec(&self).unwrap(),
+            write_to_telemetry,
+            write_to_telemetry,
+        )
     }
 }
 
