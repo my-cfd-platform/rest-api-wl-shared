@@ -1,18 +1,18 @@
 use std::sync::Arc;
 
-use my_http_server::{
+use my_http::core::{
     HttpContext, HttpFailResult, HttpOkResult, HttpServerMiddleware, HttpServerRequestFlow,
 };
-use my_no_sql_tcp_reader::MyNoSqlDataReader;
+use my_no_sql::reader::MyNoSqlDataReaderTcp;
 
 use super::{GetSessionToken, SessionEntity, TradingPlatformRequestCredentials};
 
 pub struct AuthMiddleware {
-    sessions_reader: Arc<MyNoSqlDataReader<SessionEntity>>,
+    sessions_reader: Arc<MyNoSqlDataReaderTcp<SessionEntity>>,
 }
 
 impl AuthMiddleware {
-    pub fn new(sessions_reader: Arc<MyNoSqlDataReader<SessionEntity>>) -> Self {
+    pub fn new(sessions_reader: Arc<MyNoSqlDataReaderTcp<SessionEntity>>) -> Self {
         Self { sessions_reader }
     }
 }

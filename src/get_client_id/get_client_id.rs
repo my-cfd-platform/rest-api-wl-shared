@@ -1,4 +1,4 @@
-use my_http_server::{HttpContext, HttpFailResult, WebContentType};
+use my_http::core::{HttpContext, HttpFailResult, WebContentType};
 
 pub trait GetClientId {
     fn get_client_id(&self) -> Result<&str, HttpFailResult>;

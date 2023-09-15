@@ -1,6 +1,6 @@
-use my_http_server::HttpFailResult;
-use my_http_server_controllers::controllers::documentation::DataTypeProvider;
-use my_http_server_swagger::{MyHttpIntegerEnum, MyHttpObjectStructure};
+use my_http::core::HttpFailResult;
+use my_http::controllers::controllers::documentation::DataTypeProvider;
+use my_http::macros::{MyHttpIntegerEnum, MyHttpObjectStructure};
 use serde::Serialize;
 use serde_repr::*;
 
@@ -122,7 +122,7 @@ impl Into<HttpFailResult> for ApiResultStatus {
         let write_to_telemetry = write_to_telemetry(&self);
 
         HttpFailResult::new(
-            my_http_server::WebContentType::Json,
+            my_http::core::WebContentType::Json,
             status_code,
             serde_json::to_vec(&result).unwrap(),
             write_to_telemetry,
@@ -144,7 +144,7 @@ impl<TData: Serialize + DataTypeProvider> Into<HttpFailResult> for ApiHttpResult
         let write_to_telemetry = write_to_telemetry(&self.result);
 
         HttpFailResult::new(
-            my_http_server::WebContentType::Json,
+            my_http::core::WebContentType::Json,
             status_code,
             serde_json::to_vec(&self).unwrap(),
             write_to_telemetry,

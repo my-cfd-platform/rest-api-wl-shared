@@ -1,6 +1,6 @@
 use crate::ApiResultStatus;
-use my_http_server::HttpFailResult;
-use my_http_server_swagger::MyHttpObjectStructure;
+use my_http::core::HttpFailResult;
+use my_http::macros::MyHttpObjectStructure;
 use serde::Serialize;
 
 #[derive(Serialize, Debug, MyHttpObjectStructure)]
@@ -26,7 +26,7 @@ impl AuthorizationFailedApiResponse {
 
         let content = serde_json::to_vec(&result).unwrap();
         HttpFailResult::new(
-            my_http_server::WebContentType::Json,
+            my_http::core::WebContentType::Json,
             403,
             content,
             false,
@@ -49,7 +49,7 @@ impl AuthenticationFailedApiResponse {
         let content = serde_json::to_vec(&result).unwrap();
 
         HttpFailResult::new(
-            my_http_server::WebContentType::Json,
+            my_http::core::WebContentType::Json,
             401,
             content,
             false,
@@ -62,21 +62,21 @@ impl AuthenticationFailedApiResponse {
     }
 }
 
-use my_http_server_controllers::controllers::documentation::{
+use my_http::controllers::controllers::documentation::{
     data_types::HttpDataType, out_results::HttpResult,
 };
 
 pub struct AuthFailResponseFactory;
 
-impl my_http_server_controllers::controllers::AuthErrorFactory for AuthFailResponseFactory {
-    fn get_not_authenticated(&self) -> my_http_server::HttpFailResult {
+impl my_http::controllers::controllers::AuthErrorFactory for AuthFailResponseFactory {
+    fn get_not_authenticated(&self) -> my_http::core::HttpFailResult {
         return AuthenticationFailedApiResponse::new(
             ApiResultStatus::AccessTokenExpired,
             AuthenticationFailedApiResponse::default_desc(),
         );
     }
 
-    fn get_not_authorized(&self, claim_name: String) -> my_http_server::HttpFailResult {
+    fn get_not_authorized(&self, claim_name: String) -> my_http::core::HttpFailResult {
         return AuthorizationFailedApiResponse::new(
             ApiResultStatus::AccessClaimRequired,
             claim_name,
