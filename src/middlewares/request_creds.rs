@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use my_http::core::{RequestClaim, RequestCredentials};
+use my_http_server::{RequestClaim, RequestCredentials};
 use rust_extensions::date_time::DateTimeAsMicroseconds;
 
 use super::SessionEntity;
@@ -20,7 +20,7 @@ impl RequestCredentials for TradingPlatformRequestCredentials {
         &self.session_entity.trader_id
     }
 
-    fn get_claims<'s>(&'s self) -> Option<Vec<my_http::core::RequestClaim<'s>>> {
+    fn get_claims<'s>(&'s self) -> Option<Vec<my_http_server::RequestClaim<'s>>> {
         let session_claims = self.session_entity.claims.as_ref()?;
 
         let mut result = Vec::new();

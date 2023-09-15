@@ -1,5 +1,5 @@
-use my_http::controllers::controllers::{documentation::DataTypeProvider, AuthErrorFactory};
-use my_http::macros::MyHttpObjectStructure;
+use my_http_server::controllers::{documentation::DataTypeProvider, AuthErrorFactory};
+use my_http_server::macros::MyHttpObjectStructure;
 use serde::Serialize;
 
 use crate::{ApiHttpResult, ApiResultStatus};
@@ -12,17 +12,17 @@ pub struct AccessClaimRequired {
 }
 
 impl AuthErrorFactory for AuthErrorFactoryWl {
-    fn get_not_authenticated(&self) -> my_http::core::HttpFailResult {
+    fn get_not_authenticated(&self) -> my_http_server::HttpFailResult {
         ApiResultStatus::AccessTokenExpired.into()
     }
 
-    fn get_not_authorized(&self, claim_name: String) -> my_http::core::HttpFailResult {
+    fn get_not_authorized(&self, claim_name: String) -> my_http_server::HttpFailResult {
         let content = AccessClaimRequired {
             result: ApiResultStatus::AccessClaimRequired,
             data: claim_name,
         };
-        my_http::core::HttpFailResult::new(
-            my_http::core::WebContentType::Json,
+        my_http_server::HttpFailResult::new(
+            my_http_server::WebContentType::Json,
             403,
             serde_json::to_vec(&content).unwrap(),
             false,
@@ -32,9 +32,8 @@ impl AuthErrorFactory for AuthErrorFactoryWl {
 
     fn get_global_http_fail_result_types(
         &self,
-    ) -> Option<Vec<my_http::controllers::controllers::documentation::out_results::HttpResult>>
-    {
-        use my_http::controllers::controllers::documentation::out_results::HttpResult;
+    ) -> Option<Vec<my_http_server::controllers::documentation::out_results::HttpResult>> {
+        use my_http_server::controllers::documentation::out_results::HttpResult;
         vec![
             HttpResult {
                 http_code: 401,

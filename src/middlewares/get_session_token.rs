@@ -1,4 +1,4 @@
-use my_http::core::HttpContext;
+use my_http_server::HttpContext;
 
 const AUTH_HEADER: &str = "authorization";
 
