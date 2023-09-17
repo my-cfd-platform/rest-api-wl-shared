@@ -2,6 +2,7 @@ use crate::ApiResultStatus;
 use my_http_server::macros::MyHttpObjectStructure;
 use my_http_server::HttpFailResult;
 use serde::Serialize;
+use service_sdk::my_http_server;
 
 #[derive(Serialize, Debug, MyHttpObjectStructure)]
 pub struct AuthenticationFailedApiResponse {

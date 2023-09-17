@@ -1,6 +1,7 @@
 use my_http_server::controllers::{documentation::DataTypeProvider, AuthErrorFactory};
 use my_http_server::macros::MyHttpObjectStructure;
 use serde::Serialize;
+use service_sdk::my_http_server;
 
 use crate::{ApiHttpResult, ApiResultStatus};
 

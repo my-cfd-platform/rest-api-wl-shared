@@ -1,8 +1,9 @@
-use my_http_server::controllers::documentation::DataTypeProvider;
-use my_http_server::macros::{MyHttpIntegerEnum, MyHttpObjectStructure};
-use my_http_server::HttpFailResult;
 use serde::Serialize;
 use serde_repr::*;
+use service_sdk::my_http_server;
+use service_sdk::my_http_server::controllers::documentation::DataTypeProvider;
+use service_sdk::my_http_server::macros::{MyHttpIntegerEnum, MyHttpObjectStructure};
+use service_sdk::my_http_server::*;
 
 #[derive(Serialize_repr, Deserialize_repr, MyHttpIntegerEnum, Debug, Clone, Copy)]
 #[repr(i16)]
