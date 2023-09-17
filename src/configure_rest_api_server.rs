@@ -19,5 +19,5 @@ pub fn configure_rest_api_server(
 
     http_server_builder.set_auth_error_factory(AuthFailResponseFactory);
 
-    http_server_builder.add_middleware(Arc::new(AuthMiddleware::new(sessions_reader)));
+    http_server_builder.add_auth_middleware(Arc::new(AuthMiddleware::new(sessions_reader)));
 }
