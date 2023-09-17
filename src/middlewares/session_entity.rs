@@ -10,7 +10,7 @@ pub struct SessionClaim {
     pub expires: i64,
 }
 
-#[my_no_sql::macros::my_no_sql_entity("sessionsentites")]
+#[my_no_sql_sdk::macros::my_no_sql_entity("sessionsentites")]
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct SessionEntity {
