@@ -103,7 +103,7 @@ impl ApiResultStatus {
             ApiResultStatus::DepositFailed => 200,
             ApiResultStatus::PaymentSystemIsNotSupported => 200,
             ApiResultStatus::RecaptchaVerificationError => 200,
-            ApiResultStatus::NotEnoughFundsToReserveWithdrawals => 200,
+            ApiResultStatus::NotEnoughFundsToReserveWithdrawal => 200,
         }
     }
 }
@@ -182,7 +182,7 @@ fn write_to_telemetry(from: &ApiResultStatus) -> bool {
         ApiResultStatus::DepositFailed => false,
         ApiResultStatus::PaymentSystemIsNotSupported => false,
         ApiResultStatus::ForceUpdateIsRequired => false,
-        ApiResultStatus::NotEnoughFundsToReserveWithdrawals => false,
+        ApiResultStatus::NotEnoughFundsToReserveWithdrawal => false,
     }
 }
 
