@@ -53,6 +53,12 @@ pub enum ApiResultStatus {
     #[http_enum_case(id="-14"; description="Not enough funds to reserve withdrawal")]
     NotEnoughFundsToReserveWithdrawal = -14,
 
+    #[http_enum_case(id="-15"; description="Withdraw request is not found")]
+    WithdrawalNotFound = -15,
+
+    #[http_enum_case(id="-16"; description="Withdraw request is already processed")]
+    WithdrawIsAlreadyProcessed = -16,
+
     #[http_enum_case(id="-17"; description="AccessTokenInvalid")]
     AccessTokenInvalid = -17,
 
@@ -104,6 +110,8 @@ impl ApiResultStatus {
             ApiResultStatus::PaymentSystemIsNotSupported => 200,
             ApiResultStatus::RecaptchaVerificationError => 200,
             ApiResultStatus::NotEnoughFundsToReserveWithdrawal => 200,
+            ApiResultStatus::WithdrawalNotFound => 200,
+            ApiResultStatus::WithdrawIsAlreadyProcessed => 200,
         }
     }
 }
@@ -183,6 +191,8 @@ fn write_to_telemetry(from: &ApiResultStatus) -> bool {
         ApiResultStatus::PaymentSystemIsNotSupported => false,
         ApiResultStatus::ForceUpdateIsRequired => false,
         ApiResultStatus::NotEnoughFundsToReserveWithdrawal => false,
+        ApiResultStatus::WithdrawalNotFound => false,
+        ApiResultStatus::WithdrawIsAlreadyProcessed => false,
     }
 }
 
