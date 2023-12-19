@@ -21,3 +21,4 @@ serde_repr = "*"
 serde_json = "*"
 
 async-trait = "*"
+email_address = "*"
