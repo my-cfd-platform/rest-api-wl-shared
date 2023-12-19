@@ -4,7 +4,7 @@ use rust_extensions::StrOrString;
 service_sdk::macros::use_my_http_server!();
 
 #[http_input_field]
-pub struct CountryCodeField(String);
+pub struct CountryCodeHttpField(String);
 
 fn process_value(src: &str) -> Result<StrOrString, HttpFailResult> {
     let value = src.trim().to_uppercase();
@@ -20,7 +20,7 @@ fn process_value(src: &str) -> Result<StrOrString, HttpFailResult> {
     Ok(StrOrString::create_as_string(value))
 }
 
-impl Into<CountryCode> for CountryCodeField {
+impl Into<CountryCode> for CountryCodeHttpField {
     fn into(self) -> CountryCode {
         CountryCode::parse(self.0.as_str()).unwrap()
     }
