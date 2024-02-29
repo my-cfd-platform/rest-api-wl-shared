@@ -26,3 +26,44 @@ impl Into<CountryCode> for CountryCodeHttpField {
         CountryCode::parse(self.0.as_str()).unwrap()
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_correct_iso3() {
+        let processed = CountryCodeHttpField::new("USA").unwrap();
+        match processed.into() {
+            CountryCode::USA => {}
+            _ => panic!("Invalid country code"),
+        }
+    }
+
+    #[test]
+    fn test_correct_iso3_lowercase() {
+        let processed = CountryCodeHttpField::new("usa").unwrap();
+        match processed.into() {
+            CountryCode::USA => {}
+            _ => panic!("Invalid country code"),
+        }
+    }
+
+    #[test]
+    fn test_correct_iso2_lowercase() {
+        let processed = CountryCodeHttpField::new("us").unwrap();
+        match processed.into() {
+            CountryCode::USA => {}
+            _ => panic!("Invalid country code"),
+        }
+    }
+
+    #[test]
+    fn test_non_correct_iso_code() {
+        let processed = CountryCodeHttpField::new("GGG");
+        assert_eq!(true, processed.is_err());
+
+        let processed = processed.unwrap_err();
+        assert_eq!(processed.status_code, 400);
+    }
+}
