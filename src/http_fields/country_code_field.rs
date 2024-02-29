@@ -12,9 +12,10 @@ fn process_value(src: &str) -> Result<StrOrString, HttpFailResult> {
     let parsed = CountryCode::parse(value.as_str());
 
     if parsed.is_err() {
-        return Err(HttpFailResult::as_validation_error(
-            "Country code is not valid".to_string(),
-        ));
+        return Err(HttpFailResult::as_validation_error(format!(
+            "Country code {} is not valid",
+            src
+        )));
     }
 
     Ok(StrOrString::create_as_string(value))
