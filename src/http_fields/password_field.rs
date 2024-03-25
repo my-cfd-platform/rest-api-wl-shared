@@ -3,7 +3,7 @@ use rust_extensions::StrOrString;
 service_sdk::macros::use_my_http_server!();
 
 #[http_input_field]
-pub struct PasswordField(String);
+pub struct PasswordHttpField(String);
 
 fn process_value(src: &str) -> Result<StrOrString, HttpFailResult> {
     if src.len() < 8 {
