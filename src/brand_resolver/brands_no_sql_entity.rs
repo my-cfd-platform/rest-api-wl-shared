@@ -1,6 +1,7 @@
 use serde::*;
 service_sdk::macros::use_my_no_sql_entity!();
 
+//todo!("This entity must be removed from my-nosql shared library");
 #[my_no_sql_entity("brands")]
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BrandMyNoSqlEntity {
