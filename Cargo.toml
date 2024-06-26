@@ -7,6 +7,7 @@ edition = "2021"
 [features]
 default = []
 auth-middleware = ["service-sdk/my-nosql-data-reader-sdk"]
+brand-resolver = ["service-sdk/my-nosql-data-reader-sdk"]
 
 [dependencies]
 service-sdk = { tag = "0.2.5", git = "https://github.com/MyJetTools/service-sdk.git", features = [

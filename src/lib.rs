@@ -14,4 +14,7 @@ mod configure_rest_api_server_with_no_auth_middleware;
 #[cfg(not(feature = "auth-middleware"))]
 pub use configure_rest_api_server_with_no_auth_middleware::*;
 
+#[cfg(feature = "brand-resolver")]
+pub mod brand_resolver;
+
 pub mod http_fields;
