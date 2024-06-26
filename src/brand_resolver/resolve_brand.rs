@@ -26,7 +26,7 @@ impl BrandIdResolver for HttpContext {
 
         match item {
             Some(item) => item.brand_id.to_string(),
-            None => default_brand,
+            None => default_brand_id,
         }
     }
 }
