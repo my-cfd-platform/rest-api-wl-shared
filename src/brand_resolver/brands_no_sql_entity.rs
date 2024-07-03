@@ -47,6 +47,9 @@ pub struct BrandMyNoSqlEntity {
 
     #[serde(rename = "mobileAppLogo")]
     pub mobile_app_logo: Option<String>,
+
+    #[serde(rename = "logInUrl")]
+    pub login_url: Option<String>,
 }
 
 impl BrandMyNoSqlEntity {
