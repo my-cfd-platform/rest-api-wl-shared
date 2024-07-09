@@ -63,6 +63,9 @@ pub struct BrandMyNoSqlEntity {
     #[serde(rename = "hideKycContent")]
     pub hide_kyc_content: Option<bool>,
 
+    #[serde(rename = "hideDeposit")]
+    pub hide_deposit: Option<bool>,
+
     #[serde(rename = "defaultChartTimeFrame")]
     pub default_chart_time_frame: Option<String>,
 }
