@@ -66,6 +66,9 @@ pub struct BrandMyNoSqlEntity {
     #[serde(rename = "hideDeposit")]
     pub hide_deposit: Option<bool>,
 
+    #[serde(rename = "hideSignUp")]
+    pub hide_sign_up: Option<bool>,
+
     #[serde(rename = "defaultChartTimeFrame")]
     pub default_chart_time_frame: Option<String>,
 }
