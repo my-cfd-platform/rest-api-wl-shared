@@ -75,11 +75,8 @@ pub struct BrandMyNoSqlEntity {
     #[serde(rename = "RecaptchaPrivateKey")]
     pub recaptcha_private_key: Option<String>,
 
-    #[serde(rename = "RecaptchaPrivateKey")]
+    #[serde(rename = "RecaptchaScoreToVerify")]
     pub recaptcha_score_to_verify: Option<f64>,
-
-    #[serde(rename = "RecaptchaIgnoreHosts")]
-    pub recaptcha_ignore_hosts: Option<Vec<String>>,
 
     #[serde(rename = "defaultChartTimeFrame")]
     pub default_chart_time_frame: Option<String>,
