@@ -69,6 +69,9 @@ pub struct BrandMyNoSqlEntity {
     #[serde(rename = "hideSignUp")]
     pub hide_sign_up: Option<bool>,
 
+    #[serde(rename = "hideAboutPageUrl")]
+    pub hide_about_page_url: Option<bool>,
+
     #[serde(rename = "RecaptchaPublicKey")]
     pub recaptcha_public_key: Option<String>,
 
