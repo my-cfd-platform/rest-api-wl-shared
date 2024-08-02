@@ -89,6 +89,12 @@ pub struct BrandMyNoSqlEntity {
 
     #[serde(rename = "pwaBackgroundColor")]
     pub pwa_background_color: Option<String>,
+
+    #[serde(rename = "forgotPasswordUrl")]
+    pub forgot_password_url: Option<String>,
+
+    #[serde(rename = "hideAccountSettings")]
+    pub hide_account_settings: Option<bool>,
 }
 
 impl BrandMyNoSqlEntity {
